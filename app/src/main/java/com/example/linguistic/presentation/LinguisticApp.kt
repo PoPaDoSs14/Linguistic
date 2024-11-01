@@ -12,9 +12,11 @@ import androidx.navigation.compose.rememberNavController
 fun LinguisticApp(viewModel: RegistrationViewModel, application: Application,navController: NavHostController){
 
     val registrationViewModel = viewModel
+    val userStatsViewModel = UserStatsViewModel(application)
 
     NavHost(navController = navController, startDestination = "RegisterScreen") {
-        composable("RegisterScreen") { RegistrationScreen(registrationViewModel) }
+        composable("RegisterScreen") { RegistrationScreen(registrationViewModel, navController) }
+        composable("UserStatsScreen") { UserStatsScreen(viewModel = userStatsViewModel)}
     }
 
 }

@@ -34,16 +34,19 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 
 
 @Composable
-fun RegistrationScreen(viewModel: RegistrationViewModel) {
+fun RegistrationScreen(viewModel: RegistrationViewModel, navController: NavController) {
     var name by remember { mutableStateOf("") }
     var avatarUri by remember { mutableStateOf<Uri?>(null) }
 
     Column(
-        modifier = Modifier.fillMaxSize().background(Color(0xff44475a)),  // Замена фона на серый
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(0xff44475a)),  // Замена фона на серый
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -58,7 +61,8 @@ fun RegistrationScreen(viewModel: RegistrationViewModel) {
             value = name,
             onValueChange = { name = it },
             label = { Text("Имя") },
-            modifier = Modifier.fillMaxWidth(0.8f)  // Уменьшение ширины поля ввода
+            modifier = Modifier
+                .fillMaxWidth(0.8f)  // Уменьшение ширины поля ввода
                 .clip(RoundedCornerShape(12.dp))
                 .border(1.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(12.dp))
         )
@@ -66,7 +70,9 @@ fun RegistrationScreen(viewModel: RegistrationViewModel) {
         Button(
             onClick = { viewModel.selectAvatar() },
             colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
-            modifier = Modifier.fillMaxWidth(0.8f).padding(8.dp)
+            modifier = Modifier
+                .fillMaxWidth(0.8f)
+                .padding(8.dp)
         ) {
             Text("Выбрать аватар", color = MaterialTheme.colorScheme.onPrimary) // Изменение цвета текста на контрастный
         }
@@ -85,11 +91,17 @@ fun RegistrationScreen(viewModel: RegistrationViewModel) {
         }
 
         Button(
-            onClick = { viewModel.registerUser(name) },
+            onClick = { viewModel.registerUser(name)
+                      navController.navigate("UserStatsScreen")},
             colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
-            modifier = Modifier.fillMaxWidth(0.8f).padding(8.dp)
+            modifier = Modifier
+                .fillMaxWidth(0.8f)
+                .padding(8.dp)
         ) {
-            Text("Зарегистрироваться", color = MaterialTheme.colorScheme.onPrimary) // Изменение цвета текста на контрастный
+            Text(
+                "Зарегистрироваться",
+                color = MaterialTheme.colorScheme.onPrimary
+            )
         }
     }
 }
