@@ -51,6 +51,8 @@ class RegistrationViewModel(application: Application) : AndroidViewModel(applica
     }
 
     private suspend fun saveUserToDatabase(name: String, avatarUri: Uri) {
-        repo.addUser(User(0, name, avatarUri.toString(), 0, 0))
+        viewModelScope.launch(Dispatchers.IO){
+            repo.addUser(User(0, name, avatarUri.toString(), 0, 0))
+        }
     }
 }
