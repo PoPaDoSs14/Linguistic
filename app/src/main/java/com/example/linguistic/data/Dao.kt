@@ -20,4 +20,7 @@ interface Dao {
 
     @Update
     fun update(userDbModel: UserDbModel)
+
+    @Query("SELECT * FROM users WHERE id=:id")
+    fun getUser(id: Int): UserDbModel
 }

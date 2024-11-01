@@ -8,6 +8,8 @@ interface Repository {
 
     suspend fun getUsers(): Flow<List<User>>
 
+    suspend fun getUser(id: Int): User
+
     suspend fun deleteUser(user: User)
 
     suspend fun update(user: User)

@@ -8,6 +8,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.compose.rememberNavController
 import com.example.linguistic.ui.theme.LinguisticTheme
+import kotlinx.coroutines.coroutineScope
 
 class MainActivity : ComponentActivity() {
 

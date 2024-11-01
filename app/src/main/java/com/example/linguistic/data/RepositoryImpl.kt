@@ -19,6 +19,10 @@ class RepositoryImpl(private val application: Application): Repository {
         mapper.mapListDbModelToListEntity(it)
     }
 
+    override suspend fun getUser(id: Int): User {
+        return mapper.mapDbModelToEntity(dao.getUser(id))
+    }
+
     override suspend fun deleteUser(user: User) {
         dao.deleteUser(user.id)
     }
