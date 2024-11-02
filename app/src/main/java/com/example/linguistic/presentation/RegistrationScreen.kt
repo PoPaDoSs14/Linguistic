@@ -46,7 +46,7 @@ fun RegistrationScreen(viewModel: RegistrationViewModel, navController: NavContr
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xff44475a)),  // Замена фона на серый
+            .background(Color(0xff44475a)),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -62,7 +62,7 @@ fun RegistrationScreen(viewModel: RegistrationViewModel, navController: NavContr
             onValueChange = { name = it },
             label = { Text("Имя") },
             modifier = Modifier
-                .fillMaxWidth(0.8f)  // Уменьшение ширины поля ввода
+                .fillMaxWidth(0.8f)
                 .clip(RoundedCornerShape(12.dp))
                 .border(1.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(12.dp))
         )
@@ -74,7 +74,7 @@ fun RegistrationScreen(viewModel: RegistrationViewModel, navController: NavContr
                 .fillMaxWidth(0.8f)
                 .padding(8.dp)
         ) {
-            Text("Выбрать аватар", color = MaterialTheme.colorScheme.onPrimary) // Изменение цвета текста на контрастный
+            Text("Выбрать аватар", color = MaterialTheme.colorScheme.onPrimary)
         }
 
         avatarUri?.let { uri ->
@@ -92,7 +92,7 @@ fun RegistrationScreen(viewModel: RegistrationViewModel, navController: NavContr
 
         Button(
             onClick = { viewModel.registerUser(name)
-                      navController.navigate("UserStatsScreen")},
+                      navController.navigate("WordCardScreen")},
             colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
             modifier = Modifier
                 .fillMaxWidth(0.8f)

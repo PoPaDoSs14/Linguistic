@@ -26,7 +26,7 @@ fun LinguisticApp(registrationViewModel: RegistrationViewModel,userStatsViewMode
     )
 
 
-    NavHost(navController = navController, startDestination = "WordCardScreen") {
+    NavHost(navController = navController, startDestination = "RegisterScreen") {
         composable("RegisterScreen") { RegistrationScreen(registrationViewModel, navController) }
         composable("UserStatsScreen") { UserStatsScreen(viewModel = userStatsViewModel)}
         composable("WordCardScreen") { WordCardScreen(words = words)}
