@@ -1,18 +1,27 @@
 package com.example.linguistic.presentation
 
 import android.app.Application
-import android.net.Uri
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
+import com.example.linguistic.data.RepositoryImpl
+import com.example.linguistic.presentation.screens.RegistrationScreen
+import com.example.linguistic.presentation.screens.UserStatsScreen
+import com.example.linguistic.presentation.screens.WordCardScreen
 
 @Composable
-fun LinguisticApp(registrationViewModel: RegistrationViewModel,userStatsViewModel: UserStatsViewModel, application: Application,navController: NavHostController){
+fun LinguisticApp(
+    application: Application,
+    wordScreenViewModel: WordCardScreenViewModel,
+    registrationViewModel: RegistrationViewModel,
+    userStatsViewModel: UserStatsViewModel,
+    navController: NavHostController
+) {
 
     val registrationViewModel = registrationViewModel
     val userStatsViewModel = userStatsViewModel
+    val wordScreenViewModel = wordScreenViewModel
 
     val words: List<Pair<String, String>> = listOf(
         "Hello" to "Привет",
@@ -26,10 +35,14 @@ fun LinguisticApp(registrationViewModel: RegistrationViewModel,userStatsViewMode
     )
 
 
-    NavHost(navController = navController, startDestination = "RegisterScreen") {
+
+    NavHost(
+        navController = navController,
+        startDestination = if (registrationViewModel.getUser() == true) "RegisterScreen" else "WordCardScreen"
+    ) {
         composable("RegisterScreen") { RegistrationScreen(registrationViewModel, navController) }
-        composable("UserStatsScreen") { UserStatsScreen(viewModel = userStatsViewModel)}
-        composable("WordCardScreen") { WordCardScreen(words = words)}
+        composable("UserStatsScreen") { UserStatsScreen(viewModel = userStatsViewModel) }
+        composable("WordCardScreen") { WordCardScreen(words = words, wordScreenViewModel) }
     }
 
 }

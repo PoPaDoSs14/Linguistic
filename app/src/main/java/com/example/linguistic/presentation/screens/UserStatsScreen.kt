@@ -1,4 +1,4 @@
-package com.example.linguistic.presentation
+package com.example.linguistic.presentation.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -25,6 +25,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
+import com.example.linguistic.presentation.UserStatsViewModel
 
 
 @Composable

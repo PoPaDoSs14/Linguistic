@@ -13,6 +13,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.linguistic.data.RepositoryImpl
 import com.example.linguistic.domain.Repository
 import com.example.linguistic.domain.User
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -33,6 +34,16 @@ class RegistrationViewModel(application: Application) : AndroidViewModel(applica
         ) { uri: Uri? ->
             uri?.let { _avatarUri.value = it }
         }
+    }
+
+    fun getUser(): Boolean{
+        var answer = false
+        viewModelScope.launch(Dispatchers.IO) {
+            if (repo.getUser(1) != null){
+                answer = true
+            }
+        }
+        return answer
     }
 
     fun selectAvatar() {

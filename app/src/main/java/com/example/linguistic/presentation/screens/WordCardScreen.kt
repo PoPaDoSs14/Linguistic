@@ -1,4 +1,4 @@
-package com.example.linguistic.presentation
+package com.example.linguistic.presentation.screens
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -25,27 +25,27 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.linguistic.presentation.WordCardScreenViewModel
 
 @Composable
-fun WordCardScreen(words: List<Pair<String, String>>) {
+fun WordCardScreen(words: List<Pair<String, String>>, viewModel: WordCardScreenViewModel) {
     LazyColumn(
         Modifier
             .background(Color(0xff44475a))
             .fillMaxSize()
     ) {
         items(words) { wordPair ->
-            WordCard(wordPair.first, wordPair.second)
+            WordCard(wordPair.first, wordPair.second, viewModel)
         }
     }
 }
 
 @Composable
-fun WordCard(word: String, translation: String) {
+fun WordCard(word: String, translation: String, viewModel: WordCardScreenViewModel) {
     var isExpanded by remember { mutableStateOf(false) }
     var isDismissed by remember { mutableStateOf(false) }
 
@@ -58,12 +58,14 @@ fun WordCard(word: String, translation: String) {
             modifier = Modifier
                 .padding(8.dp)
                 .fillMaxWidth()
+                .clickable { isExpanded = !isExpanded }
                 .background(MaterialTheme.colorScheme.primary)
                 .pointerInput(Unit) {
                     detectHorizontalDragGestures { change, dragAmount ->
                         change.consume()
                         if (dragAmount > 50) {
                             isDismissed = true
+                            viewModel.addKnowWord()
                         }
                     }
                 },
@@ -71,7 +73,6 @@ fun WordCard(word: String, translation: String) {
             Column(
                 modifier = Modifier
                     .padding(16.dp)
-                    .clickable { isExpanded = !isExpanded }
             ) {
                 Text(text = word, fontSize = 24.sp, fontWeight = FontWeight.Bold)
                 if (isExpanded) {
@@ -83,14 +84,3 @@ fun WordCard(word: String, translation: String) {
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun PreviewWordCardScreen() {
-    val words: List<Pair<String, String>> = listOf(
-        "Hello" to "Привет",
-        "Goodbye" to "До свидания",
-        "Please" to "Пожалуйста",
-        "Thank you" to "Спасибо"
-    )
-    WordCardScreen(words)
-}
