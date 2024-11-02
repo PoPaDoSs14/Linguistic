@@ -14,9 +14,22 @@ fun LinguisticApp(registrationViewModel: RegistrationViewModel,userStatsViewMode
     val registrationViewModel = registrationViewModel
     val userStatsViewModel = userStatsViewModel
 
-    NavHost(navController = navController, startDestination = "RegisterScreen") {
+    val words: List<Pair<String, String>> = listOf(
+        "Hello" to "Привет",
+        "Goodbye" to "До свидания",
+        "Please" to "Пожалуйста",
+        "Thank you" to "Спасибо",
+        "Yes" to "Да",
+        "No" to "Нет",
+        "Sorry" to "Извини",
+        "Help" to "Помощь"
+    )
+
+
+    NavHost(navController = navController, startDestination = "WordCardScreen") {
         composable("RegisterScreen") { RegistrationScreen(registrationViewModel, navController) }
         composable("UserStatsScreen") { UserStatsScreen(viewModel = userStatsViewModel)}
+        composable("WordCardScreen") { WordCardScreen(words = words)}
     }
 
 }
