@@ -2,12 +2,15 @@ package com.example.linguistic.presentation
 
 import android.app.Application
 import android.net.Uri
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.linguistic.data.RepositoryImpl
@@ -23,6 +26,9 @@ class RegistrationViewModel(application: Application) : AndroidViewModel(applica
     private val _name = mutableStateOf("")
     val name: String get() = _name.value
 
+    private val _isUserRegistered = MutableLiveData<Boolean>()
+    val isUserRegistered: LiveData<Boolean> get() = _isUserRegistered
+
     private val _avatarUri: MutableState<Uri?> = mutableStateOf(null)
     val avatarUri: Uri? get() = _avatarUri.value
 
@@ -36,14 +42,17 @@ class RegistrationViewModel(application: Application) : AndroidViewModel(applica
         }
     }
 
-    fun getUser(): Boolean{
-        var answer = false
+    fun checkUser() {
         viewModelScope.launch(Dispatchers.IO) {
-            if (repo.getUser(1) != null){
-                answer = true
+            try {
+                val user = repo.getUser(1)
+                _isUserRegistered.postValue(user != null)
+            } catch (e: Exception) {
+                // Обработка исключения
+                Log.e("RegistrationViewModel", "Error checking user", e)
+                _isUserRegistered.postValue(false)
             }
         }
-        return answer
     }
 
     fun selectAvatar() {
