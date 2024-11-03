@@ -20,6 +20,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.linguistic.data.RepositoryImpl
+import com.example.linguistic.domain.Level
 import com.example.linguistic.presentation.screens.RegistrationScreen
 import com.example.linguistic.presentation.screens.UserStatsScreen
 import com.example.linguistic.presentation.screens.WordCardScreen
@@ -64,7 +65,8 @@ fun LinguisticApp(
             WordCardScreen(
                 words = words,
                 viewModel = wordScreenViewModel,
-                navController = navController
+                navController = navController,
+                Level.EASY
             )
         }
     }

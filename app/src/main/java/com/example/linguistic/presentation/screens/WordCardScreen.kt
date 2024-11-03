@@ -32,13 +32,28 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.linguistic.domain.Level
 import com.example.linguistic.presentation.WordCardScreenViewModel
 
 @Composable
-fun WordCardScreen(words: List<Pair<String, String>>, viewModel: WordCardScreenViewModel, navController: NavHostController) {
+fun WordCardScreen(
+    words: List<Pair<String, String>>,
+    viewModel: WordCardScreenViewModel,
+    navController: NavHostController,
+    level: Level
+) {
 
 
-    val difficultyLevel = "Сложность: Средний"
+    val difficultyLevel =
+        if (level == Level.EASY) "Сложность: легко"
+        else if (level == Level.MEDIUM) "Сложность: нормально" else "Сложность: тяжело"
+
+    val color =
+        if (level == Level.EASY) Color.Green
+        else if (level == Level.MEDIUM) Color.Yellow
+        else Color.Red
+
+
 
     Column(
         modifier = Modifier
@@ -49,7 +64,7 @@ fun WordCardScreen(words: List<Pair<String, String>>, viewModel: WordCardScreenV
 
         Text(
             text = difficultyLevel,
-            color = Color.Yellow,
+            color = color,
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(16.dp)
