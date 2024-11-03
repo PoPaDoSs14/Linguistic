@@ -1,6 +1,7 @@
 package com.example.linguistic.data
 
 import android.app.Application
+import androidx.navigation.NavHostController
 import com.example.linguistic.domain.Repository
 import com.example.linguistic.domain.User
 import kotlinx.coroutines.flow.Flow
@@ -19,8 +20,11 @@ class RepositoryImpl(private val application: Application): Repository {
         mapper.mapListDbModelToListEntity(it)
     }
 
-    override suspend fun getUser(id: Int): User {
-        return mapper.mapDbModelToEntity(dao.getUser(id))
+    override suspend fun getUser(id: Int): User? {
+        if (dao.getUser(id) != null){
+            return mapper.mapDbModelToEntity(dao.getUser(id))
+        }
+        return null
     }
 
     override suspend fun deleteUser(user: User) {

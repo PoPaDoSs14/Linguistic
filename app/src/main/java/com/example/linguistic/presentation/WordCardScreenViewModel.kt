@@ -17,7 +17,7 @@ class WordCardScreenViewModel(application: Application): AndroidViewModel(applic
     fun addKnowWord(){
         viewModelScope.launch(Dispatchers.IO) {
             val user = repo.getUser(1)
-            user.countOfWord + 1
+            user?.countOfWord?.plus(1)
         }
 
     }

@@ -25,10 +25,10 @@ class UserStatsViewModel(application: Application): AndroidViewModel(application
 
     fun loadUserStats() {
         viewModelScope.launch(Dispatchers.IO) {
-            userName.value = repo.getUser(1).name
-            knownWordsCount.value = repo.getUser(1).countOfWord
-            userRating.value = repo.getUser(1).rating
-            avatarUri.value = repo.getUser(1).avatar.toUri()
+            userName.value = repo.getUser(1)?.name ?: "Имя пользователя"
+            knownWordsCount.value = repo.getUser(1)?.countOfWord ?: 100
+            userRating.value = repo.getUser(1)?.rating ?: 95
+            avatarUri.value = repo.getUser(1)?.avatar?.toUri() ?: null
         }
     }
 }
