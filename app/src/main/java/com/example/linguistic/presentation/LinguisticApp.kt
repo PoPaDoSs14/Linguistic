@@ -31,26 +31,50 @@ fun LinguisticApp(
     wordScreenViewModel: WordCardScreenViewModel,
     registrationViewModel: RegistrationViewModel,
     userStatsViewModel: UserStatsViewModel,
-    navController: NavHostController
+    navController: NavHostController,
+    level: Level
 ) {
 
-    val words: List<Pair<String, String>> = listOf(
-        Pair("Apple", "Яблоко"),
-        Pair("Orange", "Апельсин"),
-        Pair("Banana", "Банан"),
-        Pair("Grape", "Виноград"),
-        Pair("Strawberry", "Клубника"),
-        Pair("Watermelon", "Арбуз"),
-        Pair("Pineapple", "Ананас"),
-        Pair("Peach", "Персик"),
-        Pair("Cherry", "Вишня"),
-        Pair("Lemon", "Лимон"),
-        Pair("Mango", "Манго"),
-        Pair("Blueberry", "Черника"),
-        Pair("Raspberry", "Малина"),
-        Pair("Kiwi", "Киви"),
-        Pair("Coconut", "Кокос")
+    val easyWords: List<Pair<String, String>> = listOf(
+        Pair("Cat", "Кот"),
+        Pair("Dog", "Собака"),
+        Pair("Sun", "Солнце"),
+        Pair("Moon", "Луна"),
+        Pair("Tree", "Дерево"),
+        Pair("Water", "Вода"),
+        Pair("House", "Дом"),
+        Pair("Book", "Книга"),
+        Pair("Chair", "Стул"),
+        Pair("Table", "Стол")
     )
+
+    val normalWords: List<Pair<String, String>> = listOf(
+        Pair("School", "Школа"),
+        Pair("Friend", "Друг"),
+        Pair("Family", "Семья"),
+        Pair("Happy", "Счастливый"),
+        Pair("Music", "Музыка"),
+        Pair("Travel", "Путешествие"),
+        Pair("City", "Город"),
+        Pair("Animal", "Животное"),
+        Pair("Food", "Еда"),
+        Pair("Market", "Рынок")
+    )
+
+    val hardWords: List<Pair<String, String>> = listOf(
+        Pair("Philosophy", "Философия"),
+        Pair("Antidisestablishmentarianism", "Антидизестаблишментаризм"),
+        Pair("Constitutional", "Конституционный"),
+        Pair("Metamorphosis", "Метаморфоза"),
+        Pair("Pneumonoultramicroscopicsilicovolcanoconiosis", "Пневмокониоз"),
+        Pair("Cryptocurrency", "Криптовалюта"),
+        Pair("Psychotherapy", "Психотерапия"),
+        Pair("Electromagnetism", "Электромагнетизм"),
+        Pair("Bureaucracy", "Бюрократия"),
+        Pair("Incomprehensible", "Непонятный")
+    )
+
+    val words = if (level == Level.EASY) easyWords else if(level == Level.MEDIUM) normalWords else hardWords
 
     val isUserRegistered by registrationViewModel.isUserRegistered.observeAsState(initial = null)
 
@@ -66,7 +90,7 @@ fun LinguisticApp(
                 words = words,
                 viewModel = wordScreenViewModel,
                 navController = navController,
-                Level.EASY
+                level
             )
         }
     }

@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.rememberNavController
 import com.example.linguistic.data.RepositoryImpl
+import com.example.linguistic.domain.Level
 import com.example.linguistic.ui.theme.LinguisticTheme
 import kotlinx.coroutines.coroutineScope
 
@@ -33,7 +34,8 @@ class MainActivity : ComponentActivity() {
                     navController = navController,
                     registrationViewModel = registrationViewModel,
                     userStatsViewModel = userStatsViewModel,
-                    wordScreenViewModel = wordScreen
+                    wordScreenViewModel = wordScreen,
+                    level = Level.MEDIUM
                 )
             }
         }
