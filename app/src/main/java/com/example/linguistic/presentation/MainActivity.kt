@@ -22,7 +22,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        userStatsViewModel.loadUserStats()
         wordScreen = WordCardScreenViewModel(application)
         registrationViewModel = ViewModelProvider(this).get(RegistrationViewModel::class.java)
         registrationViewModel.initializeSelectAvatarLauncher(this)

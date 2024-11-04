@@ -90,7 +90,8 @@ fun LinguisticApp(
                 words = words,
                 viewModel = wordScreenViewModel,
                 navController = navController,
-                level
+                level,
+                userStatsViewModel
             )
         }
     }

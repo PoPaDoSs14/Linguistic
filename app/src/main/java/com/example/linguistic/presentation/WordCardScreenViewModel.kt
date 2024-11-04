@@ -14,11 +14,26 @@ class WordCardScreenViewModel(application: Application): AndroidViewModel(applic
     private val repo = RepositoryImpl(application)
 
 
-    fun addKnowWord(){
+    private var isUpdatingCount = false
+
+    fun addKnowWord() {
+        if (isUpdatingCount) return
+
+        isUpdatingCount = true
+
         viewModelScope.launch(Dispatchers.IO) {
             val user = repo.getUser(1)
-            user?.countOfWord?.plus(1)
+            if (user != null) {
+                val updatedCount = user.countOfWord + 1
+                user.countOfWord = updatedCount
+                update(user)
+            }
+            isUpdatingCount = false
         }
+    }
+
+    suspend fun update(user: User) {
+        repo.update(user)
 
     }
 }

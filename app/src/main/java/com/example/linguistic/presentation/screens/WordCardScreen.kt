@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.linguistic.domain.Level
+import com.example.linguistic.presentation.UserStatsViewModel
 import com.example.linguistic.presentation.WordCardScreenViewModel
 
 @Composable
@@ -40,7 +41,8 @@ fun WordCardScreen(
     words: List<Pair<String, String>>,
     viewModel: WordCardScreenViewModel,
     navController: NavHostController,
-    level: Level
+    level: Level,
+    statsViewModel: UserStatsViewModel
 ) {
 
 
@@ -79,7 +81,9 @@ fun WordCardScreen(
 
 
         Button(
-            onClick = { navController.navigate("UserStatsScreen") },
+            onClick = {
+                statsViewModel.loadUserStats()
+                navController.navigate("UserStatsScreen") },
             modifier = Modifier
                 .padding(16.dp)
                 .align(Alignment.CenterHorizontally)
@@ -93,6 +97,7 @@ fun WordCardScreen(
 fun WordCard(word: String, translation: String, viewModel: WordCardScreenViewModel) {
     var isExpanded by remember { mutableStateOf(false) }
     var isDismissed by remember { mutableStateOf(false) }
+    var isGestureHandled = false
 
     AnimatedVisibility(
         visible = !isDismissed,
@@ -108,9 +113,12 @@ fun WordCard(word: String, translation: String, viewModel: WordCardScreenViewMod
                 .pointerInput(Unit) {
                     detectHorizontalDragGestures { change, dragAmount ->
                         change.consume()
-                        if (dragAmount > 50) {
+                        if (dragAmount > 50 && !isGestureHandled) {
                             isDismissed = true
+                            isGestureHandled = true
                             viewModel.addKnowWord()
+                        } else if (dragAmount < 50) {
+                            isGestureHandled = false
                         }
                     }
                 },

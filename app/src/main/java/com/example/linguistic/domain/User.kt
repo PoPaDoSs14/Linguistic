@@ -6,6 +6,6 @@ data class User (
     val id: Int,
     val name: String,
     val avatar: String,
-    val countOfWord: Int,
+    var countOfWord: Int,
     val rating: Int
 )
