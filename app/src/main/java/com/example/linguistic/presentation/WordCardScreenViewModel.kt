@@ -36,4 +36,6 @@ class WordCardScreenViewModel(application: Application): AndroidViewModel(applic
         repo.update(user)
 
     }
+
+
 }

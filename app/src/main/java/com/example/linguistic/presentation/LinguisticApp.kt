@@ -87,7 +87,7 @@ fun LinguisticApp(
         composable("UserStatsScreen") { UserStatsScreen(viewModel = userStatsViewModel) }
         composable("WordCardScreen") {
             WordCardScreen(
-                words = words,
+                easyWords = words.toMutableList(),
                 viewModel = wordScreenViewModel,
                 navController = navController,
                 level,

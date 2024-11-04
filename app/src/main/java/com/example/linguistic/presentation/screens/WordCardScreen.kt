@@ -38,7 +38,7 @@ import com.example.linguistic.presentation.WordCardScreenViewModel
 
 @Composable
 fun WordCardScreen(
-    words: List<Pair<String, String>>,
+    easyWords: MutableList<Pair<String, String>>,
     viewModel: WordCardScreenViewModel,
     navController: NavHostController,
     level: Level,
@@ -74,8 +74,15 @@ fun WordCardScreen(
 
 
         LazyColumn {
-            items(words) { wordPair ->
-                WordCard(wordPair.first, wordPair.second, viewModel)
+            items(easyWords) { wordPair ->
+                WordCard(
+                    word = wordPair.first,
+                    translation = wordPair.second,
+                    viewModel = viewModel,
+                    onWordDismissed = {
+                        easyWords.remove(wordPair)
+                    }
+                )
             }
         }
 
@@ -94,7 +101,12 @@ fun WordCardScreen(
 }
 
 @Composable
-fun WordCard(word: String, translation: String, viewModel: WordCardScreenViewModel) {
+fun WordCard(
+    word: String,
+    translation: String,
+    viewModel: WordCardScreenViewModel,
+    onWordDismissed: () -> Unit
+) {
     var isExpanded by remember { mutableStateOf(false) }
     var isDismissed by remember { mutableStateOf(false) }
     var isGestureHandled = false
@@ -117,12 +129,13 @@ fun WordCard(word: String, translation: String, viewModel: WordCardScreenViewMod
                             isDismissed = true
                             isGestureHandled = true
                             viewModel.addKnowWord()
+                            onWordDismissed()
                         } else if (dragAmount < 50) {
                             isGestureHandled = false
                         }
                     }
-                },
-        ) {
+                }
+        )  {
             Column(
                 modifier = Modifier
                     .padding(16.dp)
