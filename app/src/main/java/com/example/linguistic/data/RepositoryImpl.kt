@@ -2,15 +2,19 @@ package com.example.linguistic.data
 
 import android.app.Application
 import androidx.navigation.NavHostController
+import com.example.linguistic.domain.Level
 import com.example.linguistic.domain.Repository
 import com.example.linguistic.domain.User
+import com.example.linguistic.domain.Words
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class RepositoryImpl(private val application: Application): Repository {
 
     val mapper = UserMapper()
+    val wordsMapper = WordsMapper()
     val dao = AppDatabase.getInstance(application).userDao()
+    val wordsDao = AppDatabase.getInstance(application).wordsDao()
 
     override suspend fun addUser(user: User) {
         dao.addUser(mapper.mapEntityToDbModel(user))
@@ -32,4 +36,17 @@ class RepositoryImpl(private val application: Application): Repository {
     }
 
     override suspend fun update(user: User) = dao.update(mapper.mapEntityToDbModel(user))
+
+
+    override suspend fun addWords(words: Words) {
+        wordsDao.addWords(wordsMapper.mapEntityToDbModel(words))
+    }
+
+    override suspend fun deleteWords(level: String) {
+        wordsDao.deleteWords(level)
+    }
+
+    override suspend fun getWords(): List<Words> =
+        wordsMapper.mapListDbModelToListEntity(wordsDao.getWords())
+
 }

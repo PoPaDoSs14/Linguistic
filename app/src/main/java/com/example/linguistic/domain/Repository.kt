@@ -13,4 +13,11 @@ interface Repository {
     suspend fun deleteUser(user: User)
 
     suspend fun update(user: User)
+
+
+    suspend fun addWords(words: Words)
+
+    suspend fun deleteWords(level: String)
+
+    suspend fun getWords(): List<Words>
 }
