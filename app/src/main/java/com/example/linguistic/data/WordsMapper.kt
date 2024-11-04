@@ -15,7 +15,7 @@ class WordsMapper {
         )
     }
 
-    fun mapDbModelToEntity(wordsDbModel: WordsDbModel): Words {
+    fun mapDbModelToEntity(wordsDbModel: WordsDbModel): Words? {
         return Words(
             id = wordsDbModel.id,
             level = converters.toLevel(wordsDbModel.level),
@@ -25,6 +25,6 @@ class WordsMapper {
 
 
     fun mapListDbModelToListEntity(list: List<WordsDbModel>): List<Words> = list.map {
-        mapDbModelToEntity(it)
+        mapDbModelToEntity(it)!!
     }
 }

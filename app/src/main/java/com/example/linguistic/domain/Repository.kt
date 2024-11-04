@@ -20,4 +20,6 @@ interface Repository {
     suspend fun deleteWords(level: String)
 
     suspend fun getWords(): List<Words>
+
+    suspend fun getWord(level: String): Words?
 }

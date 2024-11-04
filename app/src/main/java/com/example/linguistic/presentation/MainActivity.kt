@@ -17,12 +17,11 @@ class MainActivity : ComponentActivity() {
 
     private lateinit var registrationViewModel: RegistrationViewModel
     private val userStatsViewModel: UserStatsViewModel by viewModels()
-    private lateinit var wordScreen: WordCardScreenViewModel
+    private val wordScreen: WordCardScreenViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        wordScreen = WordCardScreenViewModel(application)
         registrationViewModel = ViewModelProvider(this).get(RegistrationViewModel::class.java)
         registrationViewModel.initializeSelectAvatarLauncher(this)
         setContent {

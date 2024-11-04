@@ -21,6 +21,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.linguistic.data.RepositoryImpl
 import com.example.linguistic.domain.Level
+import com.example.linguistic.domain.Words
 import com.example.linguistic.presentation.screens.RegistrationScreen
 import com.example.linguistic.presentation.screens.UserStatsScreen
 import com.example.linguistic.presentation.screens.WordCardScreen
@@ -35,44 +36,13 @@ fun LinguisticApp(
     level: Level
 ) {
 
-    val easyWords: List<Pair<String, String>> = listOf(
-        Pair("Cat", "Кот"),
-        Pair("Dog", "Собака"),
-        Pair("Sun", "Солнце"),
-        Pair("Moon", "Луна"),
-        Pair("Tree", "Дерево"),
-        Pair("Water", "Вода"),
-        Pair("House", "Дом"),
-        Pair("Book", "Книга"),
-        Pair("Chair", "Стул"),
-        Pair("Table", "Стол")
-    )
+    wordScreenViewModel.loadingWords()
 
-    val normalWords: List<Pair<String, String>> = listOf(
-        Pair("School", "Школа"),
-        Pair("Friend", "Друг"),
-        Pair("Family", "Семья"),
-        Pair("Happy", "Счастливый"),
-        Pair("Music", "Музыка"),
-        Pair("Travel", "Путешествие"),
-        Pair("City", "Город"),
-        Pair("Animal", "Животное"),
-        Pair("Food", "Еда"),
-        Pair("Market", "Рынок")
-    )
+    val easyWords: Words? = wordScreenViewModel.getWords("EASY")
 
-    val hardWords: List<Pair<String, String>> = listOf(
-        Pair("Philosophy", "Философия"),
-        Pair("Antidisestablishmentarianism", "Антидизестаблишментаризм"),
-        Pair("Constitutional", "Конституционный"),
-        Pair("Metamorphosis", "Метаморфоза"),
-        Pair("Pneumonoultramicroscopicsilicovolcanoconiosis", "Пневмокониоз"),
-        Pair("Cryptocurrency", "Криптовалюта"),
-        Pair("Psychotherapy", "Психотерапия"),
-        Pair("Electromagnetism", "Электромагнетизм"),
-        Pair("Bureaucracy", "Бюрократия"),
-        Pair("Incomprehensible", "Непонятный")
-    )
+    val normalWords: Words? = wordScreenViewModel.getWords("MEDIUM")
+
+    val hardWords: Words? = wordScreenViewModel.getWords("HARD")
 
     val words = if (level == Level.EASY) easyWords else if(level == Level.MEDIUM) normalWords else hardWords
 
@@ -87,7 +57,7 @@ fun LinguisticApp(
         composable("UserStatsScreen") { UserStatsScreen(viewModel = userStatsViewModel) }
         composable("WordCardScreen") {
             WordCardScreen(
-                easyWords = words.toMutableList(),
+                easyWords = words?.words?.toMutableList() ?: mutableListOf(),
                 viewModel = wordScreenViewModel,
                 navController = navController,
                 level,
