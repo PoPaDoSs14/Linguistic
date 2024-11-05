@@ -23,6 +23,7 @@ import androidx.navigation.compose.composable
 import com.example.linguistic.data.RepositoryImpl
 import com.example.linguistic.domain.Level
 import com.example.linguistic.domain.Words
+import com.example.linguistic.presentation.screens.CongratulationsScreen
 import com.example.linguistic.presentation.screens.RegistrationScreen
 import com.example.linguistic.presentation.screens.UserStatsScreen
 import com.example.linguistic.presentation.screens.WordCardScreen
@@ -69,6 +70,7 @@ fun LinguisticApp(
     ) {
         composable("RegisterScreen") { RegistrationScreen(registrationViewModel, navController) }
         composable("UserStatsScreen") { UserStatsScreen(viewModel = userStatsViewModel) }
+        composable("CongratulationsScreen") { CongratulationsScreen() }
         composable("WordCardScreen") {
             WordCardScreen(
                 easyWords = words?.words?.toMutableList() ?: mutableListOf(),
@@ -79,6 +81,7 @@ fun LinguisticApp(
             )
         }
     }
+
 
     LaunchedEffect(Unit) {
         registrationViewModel.checkUser()
@@ -96,5 +99,9 @@ fun LinguisticApp(
         else -> {
             navController.navigate("RegisterScreen")
         }
+    }
+
+    if ((hardWords?.words?.isEmpty() == true) and ((level == Level.EASY) == true)) {
+        navController.navigate("CongratulationsScreen")
     }
 }
