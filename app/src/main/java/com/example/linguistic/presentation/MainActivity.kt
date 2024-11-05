@@ -32,8 +32,7 @@ class MainActivity : ComponentActivity() {
                     navController = navController,
                     registrationViewModel = registrationViewModel,
                     userStatsViewModel = userStatsViewModel,
-                    wordScreenViewModel = wordScreen,
-                    level = Level.HARD
+                    wordScreenViewModel = wordScreen
                 )
             }
         }

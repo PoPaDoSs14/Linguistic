@@ -34,8 +34,9 @@ fun LinguisticApp(
     registrationViewModel: RegistrationViewModel,
     userStatsViewModel: UserStatsViewModel,
     navController: NavHostController,
-    level: Level
 ) {
+
+    var level = Level.EASY
 
     LaunchedEffect(Unit) {
         wordScreenViewModel.loadingWords()
@@ -47,6 +48,14 @@ fun LinguisticApp(
     val easyWords = wordScreenViewModel.easyWords.value
     val normalWords = wordScreenViewModel.normalWords.value
     val hardWords = wordScreenViewModel.hardWords.value
+
+    if (easyWords?.words?.isEmpty() == true and (normalWords?.words?.isNotEmpty() == true)){
+        level = Level.MEDIUM
+    }
+
+    if (normalWords?.words?.isEmpty() == true and (hardWords?.words?.isNotEmpty() == true)){
+        level = Level.HARD
+    }
 
 
     val words = if (level == Level.EASY) easyWords else if(level == Level.MEDIUM) normalWords else hardWords
