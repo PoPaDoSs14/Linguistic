@@ -3,6 +3,7 @@ package com.example.linguistic.data
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 import com.example.linguistic.domain.Level
 import com.example.linguistic.domain.Words
 
@@ -20,4 +21,8 @@ interface WordsDao {
 
     @Query("SELECT * FROM words")
     fun getWords(): List<WordsDbModel>
+
+    @Update
+    fun updateWords(wordsDbModel: WordsDbModel)
+
 }

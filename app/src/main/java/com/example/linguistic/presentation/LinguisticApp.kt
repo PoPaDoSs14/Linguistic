@@ -37,9 +37,8 @@ fun LinguisticApp(
     level: Level
 ) {
 
-    wordScreenViewModel.loadingWords()
-
     LaunchedEffect(Unit) {
+        wordScreenViewModel.loadingWords()
         wordScreenViewModel.getWords("EASY")
         wordScreenViewModel.getWords("MEDIUM")
         wordScreenViewModel.getWords("HARD")

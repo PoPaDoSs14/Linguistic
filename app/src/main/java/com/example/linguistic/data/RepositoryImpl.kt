@@ -11,10 +11,10 @@ import kotlinx.coroutines.flow.map
 
 class RepositoryImpl(private val application: Application): Repository {
 
-    val mapper = UserMapper()
-    val wordsMapper = WordsMapper()
-    val dao = AppDatabase.getInstance(application).userDao()
-    val wordsDao = AppDatabase.getInstance(application).wordsDao()
+    private val mapper = UserMapper()
+    private val wordsMapper = WordsMapper()
+    private val dao = AppDatabase.getInstance(application).userDao()
+    private val wordsDao = AppDatabase.getInstance(application).wordsDao()
 
     override suspend fun addUser(user: User) {
         dao.addUser(mapper.mapEntityToDbModel(user))
@@ -52,6 +52,10 @@ class RepositoryImpl(private val application: Application): Repository {
     override suspend fun getWord(level: String): Words? {
         val wordsDbModel = wordsDao.getWord(level)
         return wordsDbModel?.let { wordsMapper.mapDbModelToEntity(it) }
+    }
+
+    override suspend fun updateWords(words: Words) {
+        wordsDao.updateWords(wordsMapper.mapEntityToDbModel(words))
     }
 
 }

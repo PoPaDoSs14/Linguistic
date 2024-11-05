@@ -22,4 +22,6 @@ interface Repository {
     suspend fun getWords(): List<Words>
 
     suspend fun getWord(level: String): Words?
+
+    suspend fun updateWords(words: Words)
 }

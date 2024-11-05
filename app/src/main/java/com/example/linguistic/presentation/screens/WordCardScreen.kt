@@ -78,6 +78,7 @@ fun WordCardScreen(
                 WordCard(
                     word = wordPair.first,
                     translation = wordPair.second,
+                    level = level,
                     viewModel = viewModel,
                     onWordDismissed = {
                         easyWords.remove(wordPair)
@@ -105,7 +106,8 @@ fun WordCard(
     word: String,
     translation: String,
     viewModel: WordCardScreenViewModel,
-    onWordDismissed: () -> Unit
+    onWordDismissed: () -> Unit,
+    level: Level
 ) {
     var isExpanded by remember { mutableStateOf(false) }
     var isDismissed by remember { mutableStateOf(false) }
@@ -130,6 +132,7 @@ fun WordCard(
                             isGestureHandled = true
                             viewModel.addKnowWord()
                             onWordDismissed()
+                            viewModel.deleteWord(word, level)
                         } else if (dragAmount < 50) {
                             isGestureHandled = false
                         }

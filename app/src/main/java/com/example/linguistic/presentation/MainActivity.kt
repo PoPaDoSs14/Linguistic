@@ -33,7 +33,7 @@ class MainActivity : ComponentActivity() {
                     registrationViewModel = registrationViewModel,
                     userStatsViewModel = userStatsViewModel,
                     wordScreenViewModel = wordScreen,
-                    level = Level.MEDIUM
+                    level = Level.HARD
                 )
             }
         }

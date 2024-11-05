@@ -1,6 +1,7 @@
 package com.example.linguistic.presentation
 
 import android.app.Application
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
@@ -51,9 +52,10 @@ class WordCardScreenViewModel(application: Application): AndroidViewModel(applic
     }
 
 
+
     fun loadingWords(){
         viewModelScope.launch(Dispatchers.IO) {
-            if (repo.getWords() == null){
+            if (repo.getWords().isEmpty()){
                 repo.addWords(Words(0, Level.EASY, listOf(
                     Pair("Cat", "Кот"),
                     Pair("Dog", "Собака"),
@@ -65,6 +67,8 @@ class WordCardScreenViewModel(application: Application): AndroidViewModel(applic
                     Pair("Book", "Книга"),
                     Pair("Chair", "Стул"),
                     Pair("Table", "Стол"))))
+
+
 
                 repo.addWords(Words(0, Level.MEDIUM, listOf(
                     Pair("School", "Школа"),
@@ -104,6 +108,42 @@ class WordCardScreenViewModel(application: Application): AndroidViewModel(applic
                 "MEDIUM" -> _normalWords.value = words
                 "HARD" -> _hardWords.value = words
             }
+        }
+    }
+
+    fun updateWords(words: Words){
+        viewModelScope.launch(Dispatchers.IO) {
+            repo.updateWords(words)
+        }
+    }
+
+    fun deleteWord(word: String, level: Level) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val updatedWords = when (level) {
+                Level.EASY -> {
+                    val currentEasyWords = _easyWords.value?.words ?: emptyList()
+                    currentEasyWords.filter { it.first != word }
+                }
+                Level.MEDIUM -> {
+                    val currentNormalWords = _normalWords.value?.words ?: emptyList()
+                    currentNormalWords.filter { it.first != word }
+                }
+                Level.HARD -> {
+                    val currentHardWords = _hardWords.value?.words ?: emptyList()
+                    currentHardWords.filter { it.first != word }
+                }
+            }
+
+
+            when (level) {
+                Level.EASY -> _easyWords.value = _easyWords.value?.copy(words = updatedWords)
+                Level.MEDIUM -> _normalWords.value = _normalWords.value?.copy(words = updatedWords)
+                Level.HARD -> _hardWords.value = _hardWords.value?.copy(words = updatedWords)
+            }
+
+            repo.deleteWords(level.name)
+
+            repo.addWords(Words(0, level, updatedWords))
         }
     }
 
