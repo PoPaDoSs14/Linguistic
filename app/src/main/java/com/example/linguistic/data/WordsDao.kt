@@ -15,8 +15,8 @@ interface WordsDao {
     @Query("DELETE FROM words WHERE level=:level")
     fun deleteWords(level: String)
 
-    @Query("SELECT * FROM words WHERE level=:level")
-    fun getWord(level: String): WordsDbModel
+    @Query("SELECT * FROM words WHERE level=:level LIMIT 1")
+    fun getWord(level: String): WordsDbModel?
 
     @Query("SELECT * FROM words")
     fun getWords(): List<WordsDbModel>

@@ -1,6 +1,7 @@
 package com.example.linguistic.presentation
 
 import android.app.Application
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.CircularProgressIndicator
@@ -38,11 +39,16 @@ fun LinguisticApp(
 
     wordScreenViewModel.loadingWords()
 
-    val easyWords: Words? = wordScreenViewModel.getWords("EASY")
+    LaunchedEffect(Unit) {
+        wordScreenViewModel.getWords("EASY")
+        wordScreenViewModel.getWords("MEDIUM")
+        wordScreenViewModel.getWords("HARD")
+    }
 
-    val normalWords: Words? = wordScreenViewModel.getWords("MEDIUM")
+    val easyWords = wordScreenViewModel.easyWords.value
+    val normalWords = wordScreenViewModel.normalWords.value
+    val hardWords = wordScreenViewModel.hardWords.value
 
-    val hardWords: Words? = wordScreenViewModel.getWords("HARD")
 
     val words = if (level == Level.EASY) easyWords else if(level == Level.MEDIUM) normalWords else hardWords
 

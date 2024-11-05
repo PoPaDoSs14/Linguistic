@@ -1,6 +1,8 @@
 package com.example.linguistic.presentation
 
 import android.app.Application
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,6 +16,15 @@ import kotlinx.coroutines.launch
 class WordCardScreenViewModel(application: Application): AndroidViewModel(application) {
 
     private val repo = RepositoryImpl(application)
+
+    private var _easyWords = mutableStateOf<Words?>(null)
+    val easyWords: State<Words?> = _easyWords
+
+    private var _normalWords = mutableStateOf<Words?>(null)
+    val normalWords: State<Words?> = _normalWords
+
+    private var _hardWords = mutableStateOf<Words?>(null)
+    val hardWords: State<Words?> = _hardWords
 
 
     private var isUpdatingCount = false
@@ -38,6 +49,7 @@ class WordCardScreenViewModel(application: Application): AndroidViewModel(applic
         repo.update(user)
 
     }
+
 
     fun loadingWords(){
         viewModelScope.launch(Dispatchers.IO) {
@@ -84,12 +96,15 @@ class WordCardScreenViewModel(application: Application): AndroidViewModel(applic
 
     }
 
-    fun getWords(level: String): Words?{
-        var words: Words? = null
+    fun getWords(level: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            words = repo.getWord(level)
+            val words = repo.getWord(level)
+            when (level) {
+                "EASY" -> _easyWords.value = words
+                "MEDIUM" -> _normalWords.value = words
+                "HARD" -> _hardWords.value = words
+            }
         }
-        return words
     }
 
 

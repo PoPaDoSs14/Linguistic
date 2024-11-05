@@ -50,10 +50,8 @@ class RepositoryImpl(private val application: Application): Repository {
         wordsMapper.mapListDbModelToListEntity(wordsDao.getWords())
 
     override suspend fun getWord(level: String): Words? {
-        if (wordsDao.getWord(level) != null){
-            return wordsMapper.mapDbModelToEntity(wordsDao.getWord(level))
-        }
-        return null
+        val wordsDbModel = wordsDao.getWord(level)
+        return wordsDbModel?.let { wordsMapper.mapDbModelToEntity(it) }
     }
 
 }
