@@ -12,6 +12,7 @@ import com.example.linguistic.domain.Level
 import com.example.linguistic.domain.User
 import com.example.linguistic.domain.Words
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class WordCardScreenViewModel(application: Application): AndroidViewModel(application) {
@@ -119,28 +120,35 @@ class WordCardScreenViewModel(application: Application): AndroidViewModel(applic
     }
 
     fun deleteWord(word: String, level: Level) {
-        viewModelScope.launch(Dispatchers.IO) {
-            val updatedWords = when (level) {
-                Level.EASY -> {
-                    val currentEasyWords = _easyWords.value?.words ?: emptyList()
-                    currentEasyWords.filter { it.first != word }
-                }
-                Level.MEDIUM -> {
-                    val currentNormalWords = _normalWords.value?.words ?: emptyList()
-                    currentNormalWords.filter { it.first != word }
-                }
-                Level.HARD -> {
-                    val currentHardWords = _hardWords.value?.words ?: emptyList()
-                    currentHardWords.filter { it.first != word }
-                }
+
+        val updatedWords = when (level) {
+            Level.EASY -> {
+                val currentEasyWords = _easyWords.value?.words ?: emptyList()
+                currentEasyWords.filter { it.first != word }
             }
+            Level.MEDIUM -> {
+                val currentMediumWords = _normalWords.value?.words ?: emptyList()
+                currentMediumWords.filter { it.first != word }
+            }
+            Level.HARD -> {
+                val currentHardWords = _hardWords.value?.words ?: emptyList()
+                currentHardWords.filter { it.first != word }
+            }
+        }
 
 
+        viewModelScope.launch(Dispatchers.Main) {
             when (level) {
                 Level.EASY -> _easyWords.value = _easyWords.value?.copy(words = updatedWords)
                 Level.MEDIUM -> _normalWords.value = _normalWords.value?.copy(words = updatedWords)
                 Level.HARD -> _hardWords.value = _hardWords.value?.copy(words = updatedWords)
             }
+        }
+
+
+        viewModelScope.launch(Dispatchers.IO) {
+
+            delay(5)
 
             repo.deleteWords(level.name)
 
