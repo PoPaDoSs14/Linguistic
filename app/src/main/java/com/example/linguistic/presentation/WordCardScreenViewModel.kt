@@ -40,6 +40,8 @@ class WordCardScreenViewModel(application: Application): AndroidViewModel(applic
             if (user != null) {
                 val updatedCount = user.countOfWord + 1
                 user.countOfWord = updatedCount
+                val updateRaiting = user.rating + 100
+                user.rating = updateRaiting
                 update(user)
             }
             isUpdatingCount = false
@@ -48,7 +50,6 @@ class WordCardScreenViewModel(application: Application): AndroidViewModel(applic
 
     suspend fun update(user: User) {
         repo.update(user)
-
     }
 
 
