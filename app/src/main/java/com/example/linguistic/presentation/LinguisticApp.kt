@@ -59,7 +59,8 @@ fun LinguisticApp(
     }
 
 
-    val words = if (level == Level.EASY) easyWords else if(level == Level.MEDIUM) normalWords else hardWords
+    val words =
+        if (level == Level.EASY) easyWords else if (level == Level.MEDIUM) normalWords else hardWords
 
     val isUserRegistered by registrationViewModel.isUserRegistered.observeAsState(initial = null)
 
@@ -68,7 +69,13 @@ fun LinguisticApp(
         navController = navController,
         startDestination = "RegisterScreen"
     ) {
-        composable("RegisterScreen") { RegistrationScreen(registrationViewModel, navController) }
+        composable("RegisterScreen") {
+            RegistrationScreen(
+                registrationViewModel,
+                navController,
+                wordScreenViewModel
+            )
+        }
         composable("UserStatsScreen") { UserStatsScreen(viewModel = userStatsViewModel) }
         composable("CongratulationsScreen") { CongratulationsScreen() }
         composable("WordCardScreen") {

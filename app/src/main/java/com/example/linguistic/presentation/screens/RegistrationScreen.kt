@@ -32,10 +32,11 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.example.linguistic.presentation.RegistrationViewModel
+import com.example.linguistic.presentation.WordCardScreenViewModel
 
 
 @Composable
-fun RegistrationScreen(viewModel: RegistrationViewModel, navController: NavController) {
+fun RegistrationScreen(viewModel: RegistrationViewModel, navController: NavController, wordViewModel: WordCardScreenViewModel) {
     var name by remember { mutableStateOf("") }
     var avatarUri by remember { mutableStateOf<Uri?>(null) }
 
@@ -88,7 +89,8 @@ fun RegistrationScreen(viewModel: RegistrationViewModel, navController: NavContr
 
         Button(
             onClick = { viewModel.registerUser(name)
-                      navController.navigate("WordCardScreen")},
+                      navController.navigate("WordCardScreen")
+                      wordViewModel.loadingWords()},
             colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
             modifier = Modifier
                 .fillMaxWidth(0.8f)
